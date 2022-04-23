@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import NoteItem from '@/components/notes/NoteItem.vue';
 import type { Note } from '@/types/note';
 import { v4 as uuid } from 'uuid';
 import { ref } from 'vue';
@@ -59,16 +60,6 @@ function addNote() {
       </div>
     </div>
 
-    <div v-for="note in notes" :key="note.id" class="card mb-4">
-      <div class="card-content">
-        <div class="content">
-          {{ note.body }}
-        </div>
-      </div>
-      <footer class="card-footer">
-        <a href="#" class="card-footer-item">Edit</a>
-        <a href="#" class="card-footer-item">Delete</a>
-      </footer>
-    </div>
+    <NoteItem v-for="note in notes" :key="note.id" :note="note" class="mb-4" />
   </div>
 </template>
