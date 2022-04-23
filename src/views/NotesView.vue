@@ -1,4 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { Note } from '@/types/note';
+import { ref } from 'vue';
+
+const notes = ref<Note[]>([
+  { id: 'id1', body: 'Note 1' },
+  { id: 'id2', body: 'Note 2' },
+  { id: 'id3', body: 'Note 3' },
+  { id: 'id4', body: 'Note 4' },
+]);
+</script>
 
 <template>
   <div class="notes">
@@ -18,13 +28,10 @@
       </div>
     </div>
 
-    <div v-for="i in 4" :key="i" class="card mb-4">
+    <div v-for="note in notes" :key="note.id" class="card mb-4">
       <div class="card-content">
         <div class="content">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem impedit
-          doloribus consequuntur explicabo non, deleniti molestiae eveniet cum
-          optio vel repudiandae fugiat. Praesentium, eligendi? Quod soluta omnis
-          aperiam eum atque.
+          {{ note.body }}
         </div>
       </div>
       <footer class="card-footer">
