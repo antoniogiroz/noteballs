@@ -1,35 +1,26 @@
 <script setup lang="ts">
 import NoteItem from '@/components/notes/NoteItem.vue';
-import type { Note } from '@/types/note';
-import { v4 as uuid } from 'uuid';
+import { useNotesStore } from '@/stores/notes';
 import { ref } from 'vue';
+
+const notesStore = useNotesStore();
 
 const newNoteRef = ref<HTMLTextAreaElement | null>(null);
 const newNote = ref('');
-
-const notes = ref<Note[]>([
-  { id: 'id1', body: 'Note 1' },
-  { id: 'id2', body: 'Note 2' },
-  { id: 'id3', body: 'Note 3' },
-  { id: 'id4', body: 'Note 4' },
-]);
 
 function addNote() {
   if (!newNote.value?.trim()) {
     return;
   }
 
-  notes.value.unshift({
-    id: uuid(),
-    body: newNote.value,
-  });
+  notesStore.addNote(newNote.value.trim());
 
   newNote.value = '';
   newNoteRef.value?.focus();
 }
 
 function deleteNote(id: string) {
-  notes.value = notes.value.filter((note) => note.id !== id);
+  notesStore.deleteNote(id);
 }
 </script>
 
@@ -65,7 +56,7 @@ function deleteNote(id: string) {
     </div>
 
     <NoteItem
-      v-for="note in notes"
+      v-for="note in notesStore.notes"
       :key="note.id"
       :note="note"
       class="mb-4"
